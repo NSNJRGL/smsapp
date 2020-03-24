@@ -47,7 +47,7 @@ class App extends Component {
     lists.data.map((data) => {
       if(data.status === 0 ) {
         this.updateList(data);
-        DirectSms.sendDirectSmsJava(this.state.lists.number, this.state.lists.message )
+        DirectSms.sendDirectSmsJava(data.number, data.message )
       }
     })
 
