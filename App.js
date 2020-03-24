@@ -17,7 +17,41 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { lists: {}};
+    this.state = { lists: []};
+  }
+
+  updateList(data) {
+    axios({
+      method: 'put',
+      url: 'http://192.168.1.6:3001/lists/' + data.id,
+      data: {
+        id: data.id,
+        status: 1
+      },
+      params: {
+        id: data.id
+      },
+    }).then(function (response) {
+      console.log(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  async getList() {
+    const lists = await axios.get("http://192.168.1.6:3001/lists");
+
+    console.log(lists.data)
+
+    lists.data.map((data) => {
+      if(data.status === 0 ) {
+        this.updateList(data);
+        DirectSms.sendDirectSmsJava(this.state.lists.number, this.state.lists.message )
+      }
+    })
+
+    return Promise.resolve();
   }
 
   async componentDidMount() {
@@ -35,14 +69,8 @@ class App extends Component {
           },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        const lists = await axios.get("http://10.0.2.2:3001/lists");
-
-        this.interval = setInterval(() => 
-          this.setState({ lists: lists.data }, function() {
-            DirectSms.sendDirectSmsJava(this.state.lists.number, this.state.lists.message )
-          }),
-        10000);
-        return Promise.resolve();
+        this.interval = setInterval(this.getList, 10000);
+        this.getList();
       } else {
         console.warn("Permission denied");
       }
