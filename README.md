@@ -1,9 +1,12 @@
 # smsapp
+BackEnd гэсэн хавтас руу орон rails-ээ асаах хэрэгтэй. Доорх коммандаар ажиллуулна уу!
 
-cd backEnd -> rails s -b 0.0.0.0 -p 3001
+1. rails s -b 0.0.0.0 -p 3001
 
-cd .. -> npx react-native run-android
+2. npx react-native run-android
 
-Deerh zaavraar ajillana mon gar utas holboj baigaad turshij uzne uu!
+Гар утсан дээр сууж байж смс явахыг анхаарна уу!
 
-App.js dotorh API call iig ooriin ipaddressaar solin ajilluulna uu!
+Аpp.js доторх API-г өөрийн ipaddress-аар солин ажиллуулна уу!
+
+
